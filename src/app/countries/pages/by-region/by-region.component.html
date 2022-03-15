@@ -1,3 +1,21 @@
-<h2>Por Región</h2>
+<h2>Por Región {{ regionActive }}</h2>
 <hr />
-<p>by-region works!</p>
+<h5>Seleccione una Región</h5>
+<div class="row">
+  <div class="col">
+    <!-- [class]="(region === regionActive) ? 'btn-primary' : 'btn-outline-primary'" -->
+    <button
+      *ngFor="let region of regiones"
+      [class]="getClassCSS(region)"
+      (click)="activeRegion(region)"
+    >
+      {{ region }}
+    </button>
+  </div>
+</div>
+<hr />
+<div *ngIf="countries.length > 0" class="row animated fadeIn fast">
+  <div class="col">
+    <app-country-table [countries]="countries"></app-country-table>
+  </div>
+</div>

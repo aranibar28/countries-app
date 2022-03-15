@@ -10,13 +10,15 @@ export class ByCountryComponent {
   word: string = '';
   error: boolean = false;
   countries: Country[] = [];
+  countriesSuggestion: Country[] = [];
+  showSuggestion: boolean = false;
 
   constructor(private countryService: CountryService) {}
 
-  search(word: string) {
-    this.word = word;
+  search(termino: string) {
+    this.word = termino;
     this.error = false;
-    this.countryService.searchCountry(word).subscribe({
+    this.countryService.searchCountry(termino).subscribe({
       next: (data) => {
         this.countries = data;
         console.log(this.countries);
@@ -26,5 +28,21 @@ export class ByCountryComponent {
         this.countries = [];
       },
     });
+  }
+
+  suggestion(termino: string) {
+    this.error = false;
+    this.word = termino;
+    this.showSuggestion = true;
+    this.countryService.searchCountry(termino).subscribe({
+      next: (countries) => {
+        this.countriesSuggestion = countries.splice(0, 5);
+      },
+      error: (error) => (this.countriesSuggestion = []),
+    });
+  }
+
+  searchSuggestions(termino: string) {
+    this.search(termino);
   }
 }

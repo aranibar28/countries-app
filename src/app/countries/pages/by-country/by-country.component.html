@@ -2,9 +2,30 @@
 <hr />
 <div class="row">
   <div class="col">
-    <app-country-input (onEnter)="search($event)"></app-country-input>
+    <app-country-input
+      (onEnter)="search($event)"
+      (onDebounce)="suggestion($event)"
+      placeholder="Buscar país"
+    ></app-country-input>
   </div>
 </div>
+<ul *ngIf="showSuggestion" class="list-group">
+  <li
+    *ngFor="let countries of countriesSuggestion"
+    class="list-group-item list-group-item-action"
+  >
+    <a class="nav-link" [routerLink]="['/country', countries.cca2]">{{
+      countries.name.common
+    }}</a>
+  </li>
+  <li
+    class="list-group-item list-group-item-action"
+    (click)="searchSuggestions(word)"
+  >
+    <a class="nav-link"> Buscar "{{ word }}" </a>
+  </li>
+</ul>
+
 <hr />
 
 <div *ngIf="error" class="alert alert-danger">

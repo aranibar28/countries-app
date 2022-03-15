@@ -3,7 +3,8 @@
     class="form-control"
     name="value"
     [(ngModel)]="word"
-    placeholder="Buscar País"
+    (input)="keyPressed()"
+    [placeholder]="placeholder"
     type="text"
   />
 </form>
